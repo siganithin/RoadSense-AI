@@ -1,0 +1,63 @@
+data:
+  dataset_path: "C:/Users/sigan/.cache/kagglehub/datasets/lorenzoarcioni/road-damage-dataset-potholes-cracks-and-manholes/versions/4"
+  image_size: [224, 224]
+  batch_size: 32
+  validation_split: 0.2
+  seed: 42
+
+model:
+  base_model: "EfficientNetB0"
+  dropout_rate: 0.3
+  learning_rate: 0.0001
+  epochs: 30
+  fine_tune_layers: 20
+  fine_tune_lr_factor: 0.1
+
+training:
+  phase1_epochs: 10
+  phase2_epochs: 30
+  early_stopping_patience: 5
+  reduce_lr_patience: 3
+  reduce_lr_factor: 0.2
+  min_lr: 0.000001
+  checkpoint_monitor: "val_accuracy"
+  checkpoint_mode: "max"
+
+augmentation:
+  rotation_range: 25
+  width_shift_range: 0.2
+  height_shift_range: 0.2
+  shear_range: 0.2
+  zoom_range: 0.25
+  horizontal_flip: true
+  brightness_range: [0.75, 1.25]
+  channel_shift_range: 20.0
+  fill_mode: "nearest"
+
+classes:
+  0: "Pothole"
+  1: "Crack"
+  2: "Manhole"
+
+severity:
+  Pothole: "High"
+  Crack: "Medium"
+  Manhole: "Low"
+
+recommendations:
+  High: "Immediate maintenance required. High-risk road condition detected. Dispatch repair crew."
+  Medium: "Schedule repair within 7 days. Monitor the area for further deterioration."
+  Low: "Routine inspection recommended. Log for next maintenance cycle."
+
+inference:
+  confidence_threshold: 0.80
+  top_k: 3
+
+paths:
+  model_dir: "models"
+  model_file: "models/damage_classifier.h5"
+  class_names_file: "models/class_names.pkl"
+  log_dir: "logs"
+  report_dir: "reports"
+  figures_dir: "reports/figures"
+  results_dir: "results"
