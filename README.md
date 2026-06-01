@@ -1,3 +1,12 @@
+---
+title: RoadSense AI
+emoji: 🛣️
+colorFrom: red
+colorTo: blue
+sdk: docker
+pinned: true
+---
+
 # 🛣️ RoadSense AI — Road Damage Detection System
 
 > **AI-Powered Smart City Infrastructure Monitoring using EfficientNetB0 Transfer Learning**
