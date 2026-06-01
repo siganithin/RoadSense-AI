@@ -1,0 +1,2 @@
+# Batch inference CSV outputs are saved here by src/predict.py
+# Example: results/batch_output.csv

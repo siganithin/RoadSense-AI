@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  roadsense-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: roadsense_ai
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./models:/app/models        # Mount trained model
+      - ./logs:/app/logs            # Persist logs
+      - ./results:/app/results      # Persist batch results
+    environment:
+      - TF_ENABLE_ONEDNN_OPTS=0
+      - TF_CPP_MIN_LOG_LEVEL=2
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Optional: FastAPI inference service
+  roadsense-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: roadsense_api
+    command: ["uvicorn", "api.inference_api:app", "--host", "0.0.0.0", "--port", "8000"]
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./models:/app/models
+      - ./logs:/app/logs
+    environment:
+      - TF_ENABLE_ONEDNN_OPTS=0
+    restart: unless-stopped
+    profiles:
+      - api   # Only starts with: docker-compose --profile api up
