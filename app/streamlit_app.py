@@ -1,5 +1,4 @@
 import streamlit as st
-import tensorflow as tf
 import numpy as np
 import pickle
 import yaml
@@ -12,6 +11,14 @@ import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
 import pandas as pd
+
+# TensorFlow imported lazily — only when a real model file exists
+def _try_import_tf():
+    try:
+        import tensorflow as tf
+        return tf
+    except Exception:
+        return None
 
 # ─── Page Config ────────────────────────────────────────────────────────────────
 st.set_page_config(
@@ -107,9 +114,11 @@ def load_assets():
         config = yaml.safe_load(f)
     model, class_names = None, None
     if os.path.exists(model_path) and os.path.exists(names_path):
-        model = tf.keras.models.load_model(model_path)
-        with open(names_path, "rb") as f:
-            class_names = pickle.load(f)
+        tf = _try_import_tf()
+        if tf is not None:
+            model = tf.keras.models.load_model(model_path)
+            with open(names_path, "rb") as f:
+                class_names = pickle.load(f)
     return model, class_names, config
 
 def preprocess_image(image, target_size=(224, 224)):
@@ -245,6 +254,7 @@ Cover anomaly, routine inspection.
         with st.spinner("🔍 Analysing image with EfficientNetB0..."):
             time.sleep(0.6)
             if MODEL_READY:
+                tf = _try_import_tf()
                 processed = preprocess_image(image, img_size)
                 raw_preds = model.predict(processed, verbose=0)[0]
                 pred_idx  = int(np.argmax(raw_preds))
