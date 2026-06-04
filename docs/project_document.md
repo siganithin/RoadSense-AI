@@ -1,50 +1,10 @@
-AN INDUSTRIAL ORIENTED MINI PROJECT REPORT ON
 
 # AI-Based Road Damage Detection System for Smart City Infrastructure Monitoring
 
-*in the partial fulfillment of the requirements for the award of the degree of*
-
-## BACHELOR OF TECHNOLOGY
-### in
-## COMPUTER SCIENCE AND ENGINEERING (DATA SCIENCE)
-
----
-
 **Submitted by**
 
-SIGA NITHIN (23B81A0590)
+SIGA NITHIN 
 
-*Under the guidance of*
-Ms. M Swapna, Assistant Professor
-
----
-
-**DEPARTMENT OF COMPUTER SCIENCE AND ENGINEERING (DATA SCIENCE)**
-CVR COLLEGE OF ENGINEERING
-*(An Autonomous institution, NAAC Accredited and Affiliated to JNTUH, Hyderabad)*
-Vastunagar, Mangalpalli (V), Ibrahimpatnam (M), Rangareddy (D), Telangana - 501 510
-
-**APRIL 2026**
-
----
-
-## CERTIFICATE
-
-This is to certify that the Industrial Oriented Mini Project report entitled **"AI-Based Road Damage Detection System for Smart City Infrastructure Monitoring"** is a Bonafide record of work carried out by **Siga Nithin (23B81A0590)** submitted to the Department of Computer Science and Engineering for the award of the Bachelor of Technology to CVR College of Engineering, affiliated to Jawaharlal Nehru Technological University, Hyderabad during the year 2025-2026.
-
----
-
-## ACKNOWLEDGEMENT
-
-I would like to express my sincere gratitude to our project guide, **Ms. M Swapna**, Assistant Professor, Department of Computer Science and Engineering, CVR College of Engineering, for her invaluable guidance, constant encouragement, and constructive suggestions throughout this project.
-
-I am deeply grateful to **Dr. A Vani Vathsala**, Head of the Department of Computer Science and Engineering, for providing the necessary infrastructure and academic environment to carry out this project successfully.
-
-I extend my heartfelt thanks to the management of CVR College of Engineering for their continued support and for providing access to the required computational resources.
-
-I also acknowledge the authors of the research paper *"EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks"* (ICML, 2019) by Tan and Le, and *"Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization"* (ICCV, 2017) by Selvaraju et al., whose works served as primary references and inspiration for this project.
-
----
 
 ## ABSTRACT
 
