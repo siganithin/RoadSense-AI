@@ -103,22 +103,46 @@ footer { visibility: hidden; }
 """, unsafe_allow_html=True)
 
 # ─── Helpers ────────────────────────────────────────────────────────────────────
+# On HF Spaces with Docker, app runs from /app which is the project root
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+# Fallback: if config.yaml exists in cwd, use that
+if not os.path.exists(os.path.join(ROOT, "config.yaml")):
+    ROOT = os.getcwd()
 
 @st.cache_resource(show_spinner=False)
 def load_assets():
     cfg_path   = os.path.join(ROOT, "config.yaml")
     model_path = os.path.join(ROOT, "models", "damage_classifier.h5")
     names_path = os.path.join(ROOT, "models", "class_names.pkl")
-    with open(cfg_path, "r") as f:
-        config = yaml.safe_load(f)
+
+    # Default config — used if config.yaml not found
+    default_config = {
+        "data": {"image_size": [224, 224]},
+        "model": {"base_model": "EfficientNetB0"},
+        "classes": {0: "Pothole", 1: "Crack", 2: "Manhole"},
+        "severity": {"Pothole": "High", "Crack": "Medium", "Manhole": "Low"},
+        "recommendations": {
+            "High":   "Immediate maintenance required. Dispatch repair crew.",
+            "Medium": "Schedule repair within 7 days.",
+            "Low":    "Routine inspection recommended.",
+        },
+    }
+    try:
+        with open(cfg_path, "r") as f:
+            config = yaml.safe_load(f)
+    except Exception:
+        config = default_config
+
     model, class_names = None, None
     if os.path.exists(model_path) and os.path.exists(names_path):
         tf = _try_import_tf()
         if tf is not None:
-            model = tf.keras.models.load_model(model_path)
-            with open(names_path, "rb") as f:
-                class_names = pickle.load(f)
+            try:
+                model = tf.keras.models.load_model(model_path)
+                with open(names_path, "rb") as f:
+                    class_names = pickle.load(f)
+            except Exception:
+                model, class_names = None, None
     return model, class_names, config
 
 def preprocess_image(image, target_size=(224, 224)):
